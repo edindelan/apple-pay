@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>React App</title>
+    <link rel="stylesheet" href="style.css"/>
+
+
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root">
+      <div id="applePay" class="apple-pay-button apple-pay-button-white"></div>
+    </div>
+
+
+    <script>
+      if (window.ApplePaySession) {
+        var merchantIdentifier = 'example.com.store';
+        var promise = ApplePaySession.canMakePaymentsWithActiveCard(merchantIdentifier);
+        promise.then(function (canMakePayments) {
+          if (canMakePayments) {
+            // Display Apple Pay button here.
+          }
+        })
+      }
+
+      document.getElementById("applePay").onclick = function(evt) {
+
+        var request = {
+          countryCode: 'US',
+          currencyCode: 'USD',
+          supportedNetworks: ['visa', 'masterCard', 'amex', 'discover'],
+          merchantCapabilities: ['supports3DS'],
+          total: { label: 'Your Merchant Name', amount: '10.00' },
+        }
+        var session = new ApplePaySession(3, request);
+        console.log('LUDILO', session);
+
+      }
+    </script>
+  </body>
+</html>
